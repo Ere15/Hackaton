@@ -5,7 +5,8 @@ from typing import Optional, List
 class LoginRequest(BaseModel):
     username: str
     password: str
-
+class Request(BaseModel):
+    name:int
 # Схема данных для создания нового запроса
 class RequestCreate(BaseModel):
     topic: str

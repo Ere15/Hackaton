@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from . import schemas  
-from . import models   
+from app.api import models   
 
 # Функция для аутентификации пользователя
 def authenticate_user(db: Session, username: str, password: str):
