@@ -52,22 +52,48 @@ def get_owner_profile(db: Session = Depends(get_db)):
     return crud.get_owner_profile(db=db)
 
 
+# Эндпоинт для получения расмотренных запросов для администратора
 @router.get("/admin/request/reviewed", response_model=list[schemas.Request])
 def get_admin_review_request(db: Session = Depends(get_db)):
     return crud.get_admin_review_request(db=db)
 
 
-# Эндпоинт для получения расмотренных запросов для администратора
+# Эндпоинт для получения рассмотренных запросов
 @router.get("/admin/requests/pending", response_model=list[schemas.Request])
 def get_admin_pending_requests(db: Session = Depends(get_db)):
     return crud.get_admin_pending_requests(db=db)
 
 
 # Эндопоинт для создания нового запроса админом
-@router.put("/admin/requests/", response_model=schemas.Request)
+@router.post("/admin/requests/", response_model=schemas.Request)
 def create_admin_request(request: schemas.RequestCreate, db: Session = Depends(get_db)):
     return crud.create_admin_request(db=db, request=request)
 
+
+# Эндпоинт для редактирования запроса
+@router.put("/admin/requests/{request_iq}", response_model=schemas.Request)
+def edit_admin_request(
+    request_id: int, request: schemas.RequestEdit, db: Session = Depends(get_db)
+):
+    return crud.edit_admin_request(db=db, request_id=request_id, request=request)
+
+
+# Эндпоинт для добавления новых пользователей в базу данных
+@router.post("/admin/employees/create", response_model=schemas.Employee)
+def admin_create_employees(
+    employeer: schemas.EmployeeCreate, db: Session = Depends(get_db)
+):
+    # Проверка не зарегестрировался ли еще пользаватель
+    existing_employeer = crud.get_employeer_by_employee_id(db, employee_id=employeer.employee_id)
+    if existing_employeer:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username already registered",
+        )
+    # Создаем нового пользователя
+    return crud.create_user(db=db, employeer=employeer)
+# Эндпоинт для графикто это пиздец пока не будем делать
+# Эндпоинт для получения всех запросов и их модерации. 
 
 # Эндпоинт для просмотра всех сотрудников из базы данных
 @router.get("/admin/employees", response_model=list[schemas.Employee])

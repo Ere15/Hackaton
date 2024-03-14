@@ -6,7 +6,13 @@ class LoginRequest(BaseModel):
     username: str
     password: str
 class Request(BaseModel):
-    name:int
+    topic:str
+    labels:str
+    description:str
+    request_date: Optional[str] = None
+    response_date: Optional[str] = None
+    status: Optional[str] = None
+    employee_id: int
 # Схема данных для создания нового запроса
 class RequestCreate(BaseModel):
     topic: str
@@ -39,5 +45,13 @@ class Employee(BaseModel):
     last_name: str
     first_name: str
     position: str
+    role : str
+#Cхема данных для создания сотрудника
+class EmployeeCreate(BaseModel):
 
-# Другие схемы данных могут быть добавлены здесь
+    password: str
+    email: str
+    first_name: str
+    last_name: str
+    position: str
+    role : str
