@@ -12,3 +12,4 @@ async def home(request: Request):
 @app.get("/about", response_class=HTMLResponse)
 async def about(request: Request):
     return templates.TemplateResponse("about.html", {"request": request})
+#python -m uvicorn main:app --reload
