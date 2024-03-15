@@ -21,8 +21,8 @@ async def get_page1():
         html_content = file.read()
     return html_content
 
-@app.get("/req", response_class=HTMLResponse)
+@app.get("/request", response_class=HTMLResponse)
 async def get_page2():
-    with open("app\Hakaton\request_details.html", "r") as file:
+    with open("app\\Hakaton\\request_details.html", "r") as file:
         html_content = file.read()
     return html_content
