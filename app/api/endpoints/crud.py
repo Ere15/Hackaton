@@ -2,7 +2,22 @@ from sqlalchemy.orm import Session
 from . import schemas  
 from app.api.models import employee   
 from app.api.models import request as request_model
-from datetime import datetime
+from datetime import datetime,timedelta
+import jwt
+from typing import Dict
+from fastapi.security import OAuth2PasswordBearer
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+
+# Функция по созданию токена
+def create_access_token(data: Dict[str, str], secret_key: str, expires_minutes: int):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=expires_minutes)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, secret_key, algorithm="HS256")
+    return encoded_jwt
 
 # Функция для аутентификации пользователя
 def authenticate_user(db: Session, username: str, password: str):
@@ -27,11 +42,11 @@ def edit_owner_request(db: Session, request_id: int, request: schemas.RequestEdi
         db.refresh(db_request)
     return db_request
 
-# Функция для получения запросов на рассмотрении владельцем
-def get_owner_pending_requests(db: Session):
+# Функция для получения запросов на рассмотрении владельцем``
+def get_owner_pending_requests(db: Session,user_id: int):
     considered_requests = db.query(request_model.Request).join(employee.User).filter(
         request_model.Request.Статус == 'В обработке', #заменить на нужные
-        employee.User.Роль_на_сайте == 'dir' #заменить на нужные
+        employee.User.id_сотрудника == user_id #заменить на нужные
     ).all()
     for request in considered_requests:
         request.Дата_запроса = request.Дата_запроса.strftime('%Y-%m-%d')

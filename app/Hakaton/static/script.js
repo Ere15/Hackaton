@@ -1,5 +1,3 @@
-// script.js
-
 // Получаем ссылку на форму входа
 const loginForm = document.getElementById('login-form');
 
@@ -10,6 +8,7 @@ loginForm.addEventListener('submit', function(event) {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
+    // Отправляем запрос на аутентификацию
     fetch('/login', {
         method: 'POST',
         headers: {
@@ -22,13 +21,23 @@ loginForm.addEventListener('submit', function(event) {
     })
     .then(response => {
         if (response.ok) {
-            // Переход на страницу работника компании
-            window.location.href = '/emp'; // Обращение к эндпоинту /employee
+            // Парсим ответ сервера в формат JSON
+            return response.json();
         } else {
-            alert('Логин или пароль неверны');
+            throw new Error('Логин или пароль неверны');
         }
+    })
+    .then(data => {
+        // Получаем токен доступа из ответа сервера
+        const accessToken = data.access_token;
+        // Сохраняем токен в localStorage
+        localStorage.setItem('accessToken', accessToken);
+        // Переходим на страницу работника компании
+        window.location.href = '/emp?token=' + accessToken;
     })
     .catch(error => {
         console.error('Ошибка при проверке логина:', error);
+        alert(error.message);
     });
 });
+

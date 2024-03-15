@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.api.endpoints import crud, schemas
 from app.db.base_class import get_db
+from fastapi import Depends
+#from app.api.dependencies.auth import get_current_user_id
 
 
 router = APIRouter()
@@ -17,13 +19,15 @@ def login(request: schemas.LoginRequest, db: Session = Depends(get_db)):
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return {"access_token": crud.create_access_token(data={"sub": user.username})}
+    
+    return {"access_token": crud.create_access_token(data={"sub": user.Логин}, secret_key="your_secret_key", expires_minutes=15)}
 
 
 # Эндпоинт для просмотра запросов на рассмотрении владельцем
 @router.get("/owner/requests/pending", response_model=list[schemas.Request])
 def get_owner_pending_requests(db: Session = Depends(get_db)):
-    return crud.get_owner_pending_requests(db=db)
+    #user_id: int = Depends(get_current_user_id),
+    return crud.get_owner_pending_requests(db=db,user_id=user_id)
 
 
 # Эндпоинт для просмотра рассмотренных запросов владельцем
