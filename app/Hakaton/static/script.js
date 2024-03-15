@@ -10,5 +10,5 @@ loginForm.addEventListener('submit', function(event) {
 
     //перед переходом должна быть проверка введеной почты и от нее зависит окно перехода в окно работника
     // Переходим на страницу работника компании
-    window.location.href = 'app/Hakaton/employee.html';
+    window.location.href = '/emp';
 });

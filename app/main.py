@@ -15,14 +15,14 @@ async def get_html():
         html_content = file.read()
     return html_content
 
-@app.get("/employee", response_class=HTMLResponse)
+@app.get("/emp", response_class=HTMLResponse)
 async def get_page1():
     with open("app\Hakaton\employee.html", "r") as file:
         html_content = file.read()
     return html_content
 
-@app.get("/page2", response_class=HTMLResponse)
+@app.get("/req", response_class=HTMLResponse)
 async def get_page2():
-    with open("app/Hakaton/page2.html", "r") as file:
+    with open("app\Hakaton\request_details.html", "r") as file:
         html_content = file.read()
     return html_content
