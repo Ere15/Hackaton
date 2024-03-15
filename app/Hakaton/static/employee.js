@@ -30,9 +30,12 @@ document.addEventListener("DOMContentLoaded", function() {
             if (cell.cellIndex === 1) { // Проверяем, что клик был на ячейке "Название"
                 var requestData = row.cells[0].textContent; // Получаем данные запроса из первой ячейки (номер запроса)
                 // Формируем URL новой страницы
-                var newPageURL = "request_details.html?request=" + encodeURIComponent(requestData);
+                var newPageURL = "request.html?request=" + encodeURIComponent(requestData);
                 // Открываем новую страницу в этой же вкладке
-                window.location.href = newPageURL;
+
+                // В данный момент открывается основной макет, без данных и таблицы                                    !!!!!!!!!
+                // window.location.href = newPageURL;
+                window.location.href = '/request';
             }
         });
     });
