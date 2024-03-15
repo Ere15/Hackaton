@@ -17,7 +17,7 @@ def login(request: schemas.LoginRequest, db: Session = Depends(get_db)):
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return {"access_token": crud.create_access_token(data={"sub": user.username})}
+    #return {"access_token": crud.create_access_token(data={"sub": user.username})}
 
 
 # Эндпоинт для просмотра запросов на рассмотрении владельцем
