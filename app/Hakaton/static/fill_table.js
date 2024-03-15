@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+    console.log('Скрипт был успешно выполнен!');
     // Отправляем GET-запрос на эндпоинт для получения данных
     fetch('/owner/requests/pending')
         .then(response => {

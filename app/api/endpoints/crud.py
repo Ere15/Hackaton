@@ -29,9 +29,10 @@ def edit_owner_request(db: Session, request_id: int, request: schemas.RequestEdi
 # Функция для получения запросов на рассмотрении владельцем
 def get_owner_pending_requests(db: Session):
     considered_requests = db.query(request_model.Request).filter(
-        request_model.Request.Статус == 'не_рассмотрен', #заменить на нужные
-        employee.User.Роль_на_сайте == 'владелец' #заменить на нужные
+        request_model.Request.Статус == 'В обработке', #заменить на нужные
+        employee.User.Роль_на_сайте == 'dir' #заменить на нужные
     ).all()
+    print("Получено запросов:", len(considered_requests))
     return considered_requests
 
 
