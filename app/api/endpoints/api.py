@@ -118,6 +118,7 @@ def get_employee_reviwed_request(db: Session = Depends(get_db)):
 def get_employee_pending_request(db: Session = Depends(get_db)):
     return crud.get_employee_pending_request(db=db)
 
+
 # Эндпоинт для просмотра всех сотрудников из базы данных
 @router.get("/admin/employees", response_model=list[schemas.Employee])
 def get_all_employees(db: Session = Depends(get_db)):
