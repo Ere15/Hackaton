@@ -58,7 +58,7 @@ def get_admin_review_request(db: Session = Depends(get_db)):
     return crud.get_admin_review_request(db=db)
 
 
-# Эндпоинт для получения рассмотренных запросов
+# Эндпоинт для получения запросов на рассмотрении
 @router.get("/admin/requests/pending", response_model=list[schemas.Request])
 def get_admin_pending_requests(db: Session = Depends(get_db)):
     return crud.get_admin_pending_requests(db=db)
@@ -84,7 +84,9 @@ def admin_create_employees(
     employeer: schemas.EmployeeCreate, db: Session = Depends(get_db)
 ):
     # Проверка не зарегестрировался ли еще пользаватель
-    existing_employeer = crud.get_employeer_by_employee_id(db, employee_id=employeer.employee_id)
+    existing_employeer = crud.get_employeer_by_employee_id(
+        db, employee_id=employeer.employee_id
+    )
     if existing_employeer:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -92,13 +94,31 @@ def admin_create_employees(
         )
     # Создаем нового пользователя
     return crud.create_user(db=db, employeer=employeer)
+
+
 # Эндпоинт для графикто это пиздец пока не будем делать
-# Эндпоинт для получения всех запросов и их модерации. 
+
+
+# Эндпоинт для создания нового запроса
+@router.post("/employee/requests/", response_model=schemas.Request)
+def create_employee_request(
+    request: schemas.RequestCreate, db: Session = Depends(get_db)
+):
+    return crud.create_employee_request(db=db, request=request)
+
+
+# Эндпоинт для получения всех рассмотреных запросов.
+@router.get("/employee/requests/reviewed", response_model=list[schemas.Request])
+def get_employee_reviwed_request(db: Session = Depends(get_db)):
+    return crud.get_employee_reviwed_request(db=db)
+
+
+# Эндпоинт для получения запросов на рассмотрении.
+@router.get("/employee/requests/pending", response_model=list[schemas.Request])
+def get_employee_pending_request(db: Session = Depends(get_db)):
+    return crud.get_employee_pending_request(db=db)
 
 # Эндпоинт для просмотра всех сотрудников из базы данных
 @router.get("/admin/employees", response_model=list[schemas.Employee])
 def get_all_employees(db: Session = Depends(get_db)):
     return crud.get_all_employees(db=db)
-
-
-#
