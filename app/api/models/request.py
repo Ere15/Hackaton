@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 
-class Запросы(Base):
-    __tablename__ = "Запросы"
+class Request(Base):
+    __tablename__ = "запросы"
 
     id_запроса = Column(Integer, primary_key=True, index=True, unique=True, autoincrement=True, nullable=False)
     Тема = Column(String, nullable=False)
@@ -12,7 +12,7 @@ class Запросы(Base):
     Дата_запроса = Column(Date, nullable=False)
     Дата_ответа = Column(Date)
     Статус = Column(String, nullable=False)
-    id_сотрудника = Column(Integer,  ForeignKey('Сотрудники.id'), nullable=False)
+    id_сотрудника = Column(Integer, ForeignKey('сотрудники.id_сотрудника'), nullable=False)
 
-    # Определение отношения один-ко-многим с таблицей "Сотрудники"
-    Сотрудники = relationship("Сотрудники", back_populates="Запросы")
+    # Определение отношения многие-ко-одному с таблицей "Сотрудники"
+    сотрудник = relationship("User", back_populates="запросы")  # Переименовал "Сотрудники" в "User"

@@ -2,8 +2,9 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 
-class Сотрудники(Base):
-    __tablename__ = "Сотрудники"
+
+class User(Base):
+    __tablename__ = "сотрудники"
 
     id_сотрудника = Column(Integer, primary_key=True, index=True, unique=True, autoincrement=True, nullable=False)
     Фамилия = Column(String, nullable=False)
@@ -14,4 +15,5 @@ class Сотрудники(Base):
     Роль_на_сайте = Column(String, nullable=False)
 
     # Определение обратного отношения один-ко-многим с таблицей "Запросы"
-    запросы = relationship("Запросы", back_populates="Сотрудники")
+    запросы = relationship("Request", back_populates="сотрудник")  # Переименовал "Запросы" в "Requests"
+

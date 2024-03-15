@@ -20,13 +20,13 @@ class Request(BaseModel):
 
 # Схема данных для создания нового запроса
 class RequestCreate(BaseModel):
-    topic: str
-    labels: str
-    description: str
-    request_date: Optional[str] = None
-    response_date: Optional[str] = None
-    status: Optional[str] = None
-    employee_id: int
+    Тема: str
+    Метки: str
+    Описание: str
+    Дата_запроса: Optional[str] = None
+    Дата_ответа: Optional[str] = None
+    Статус: Optional[str] = None
+    id_сотрудника: int
 
 
 # Схема данных для редактирования запроса
