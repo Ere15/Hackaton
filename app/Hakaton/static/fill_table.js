@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
             return response.json();
         })
         .then(data => {
+            // Выводим данные в консоль
+            console.log('Данные от сервера:', data);
+            
             // Обновляем таблицу с данными
             updateTable(data);
         })
@@ -24,11 +27,11 @@ document.addEventListener("DOMContentLoaded", function() {
         data.forEach(request => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${request.id}</td>
-                <td>${request.name}</td>
-                <td>${request.label}</td>
-                <td>${request.status}</td>
-                <td>${request.date}</td>
+                <td>${request.id_запроса}</td>
+                <td>${request.Дата_запроса}</td>
+                <td>${request.Метки}</td>
+                <td>${request.Статус}</td>
+                <td>${request.Тема}</td>
             `;
             tbody.appendChild(row);
         });

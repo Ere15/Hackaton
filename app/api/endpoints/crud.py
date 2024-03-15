@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from . import schemas  
 from app.api.models import employee   
 from app.api.models import request as request_model
+from datetime import datetime
 
 # Функция для аутентификации пользователя
 def authenticate_user(db: Session, username: str, password: str):
@@ -28,11 +29,12 @@ def edit_owner_request(db: Session, request_id: int, request: schemas.RequestEdi
 
 # Функция для получения запросов на рассмотрении владельцем
 def get_owner_pending_requests(db: Session):
-    considered_requests = db.query(request_model.Request).filter(
+    considered_requests = db.query(request_model.Request).join(employee.User).filter(
         request_model.Request.Статус == 'В обработке', #заменить на нужные
         employee.User.Роль_на_сайте == 'dir' #заменить на нужные
     ).all()
-    print("Получено запросов:", len(considered_requests))
+    for request in considered_requests:
+        request.Дата_запроса = request.Дата_запроса.strftime('%Y-%m-%d')
     return considered_requests
 
 

@@ -9,13 +9,11 @@ class LoginRequest(BaseModel):
 
 
 class Request(BaseModel):
-    topic: str
-    labels: str
-    description: str
-    request_date: Optional[str] = None
-    response_date: Optional[str] = None
-    status: Optional[str] = None
-    employee_id: int
+    id_запроса: int
+    Тема: str
+    Метки: str
+    Статус: str
+    Дата_запроса: str
 
 
 # Схема данных для создания нового запроса
